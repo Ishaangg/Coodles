@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Text Styler Extensionr",
+  "version": "1.3",
+  "description": "Style the text and background of a webpage with gradients and more",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["https://chatgpt.com/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "Assets/Icons/icon16.png",
+      "48": "Assets/Icons/icon48.png",
+      "128": "Assets/Icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["scripts/content.js"],
+      "css": ["styles/styles.css"]
+    }
+  ]
+}
+
+
+

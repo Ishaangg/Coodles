@@ -1,0 +1,46 @@
+/* Smooth transitions for background and font changes */
+body {
+    transition: background-color 0.5s ease, font-family 0.5s ease;
+}
+
+/* Gradient animation for text */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#dropdownMenu {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#dropdownMenu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#dropdownMenu.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Adjusted selector without 'hover:' to match content.js */
+.no-draggable.group.relative.rounded-lg.active\:opacity-90.bg-token-sidebar-surface-secondary.selected {
+    transform: scale(1.05);
+    overflow: visible;
+    background-color: rgba(255, 255, 255, 0.8);
+    white-space: normal;
+    color: black;
+    font-weight: 600;
+}
+.no-draggable.group.relative.rounded-lg.active\:opacity-90.bg-token-sidebar-surface-secondary.selected .relative.grow.overflow-hidden.whitespace-nowrap {
+    white-space: normal;
+    padding: 5px;
+    border-radius: 4px;
+}

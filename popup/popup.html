@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Styler</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        .container h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group select, 
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group select:focus, 
+        .form-group button:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 4px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-group button {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Styler</h1>
+
+        <!-- Background Color Changer -->
+        <div class="form-group">
+            <label for="color-picker">Select a Background Color:</label>
+            <select id="color-picker">
+                <option value="lightblue">Light Blue</option>
+                <option value="lightgreen">Light Green</option>
+                <option value="lightyellow">Light Yellow</option>
+                <option value="pink">Pink</option>
+                <option value="black">Black</option>
+                <option value="#ffffff">White</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button id="apply-color">Apply Background Color</button>
+        </div>
+
+        <!-- Font Changer -->
+        <div class="form-group">
+            <label for="font-picker">Select a Font:</label>
+            <select id="font-picker">
+                <option value="Arial">Arial</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Verdana">Verdana</option>
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button id="apply-font">Apply Font</button>
+        </div>
+
+        <!-- Apply Gradient to Specific Text -->
+        <div class="form-group">
+            <button id="apply-gradient">Apply Gradient to Text</button>
+        </div>
+
+        <!-- Reset Styles -->
+        <div class="form-group">
+            <button id="reset-styles">Reset Styles</button>
+        </div>
+
+        <!-- Add Dropdown Button -->
+        <div class="form-group">
+            <button id="add-dropdown">Add Dropdown Button</button>
+        </div>
+
+        <!-- Hide Elements Under <ol> -->
+        <div class="form-group">
+            <button id="hide-ol-elements">Hide Elements Under <ol></button>
+        </div>
+
+        <div class="footer">
+            Created with ❤️ by <a href="#">Ishaan Gupta</a>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
