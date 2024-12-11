@@ -44,3 +44,28 @@ body {
     padding: 5px;
     border-radius: 4px;
 }
+
+
+/* Dropdown Button Styling */
+.customDropdownButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px; /* Increased size */
+    font-weight: bold;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    padding: 4px 8px;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.customDropdownButton:hover {
+    color: #555;
+}
+
+/* Rotated state for the button when toggled */
+.customDropdownButton.rotated {
+    transform: rotate(180deg);
+}

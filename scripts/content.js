@@ -14,51 +14,123 @@ function injectHoverStyles() {
             transition: transform 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease, margin-left 0.3s ease;
             transform-origin: center center;
         }
+        
+        .absolute.bottom-0.top-0 {
+            background: linear-gradient(to left, var(--token-sidebar-surface-primary), var(--token-sidebar-surface-secondary));
+            overflow: hidden;
+        }
 
         /* Hover effect for parent div */
         .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            overflow: visible;
+            transform: scale(1.05);
+            overflow: hidden;
             background-color: rgba(255, 255, 255, 0.8);
             white-space: normal;
-            color: black; /* Set text color to black */
+            color: black;
             font-weight: 600;
-            border-radius: 16px; /* Add rounded corners */
-            margin-left: 8px; /* Reduce left margin */
+            border-radius: 10px;
+            margin-left: 8px;
         }
 
         /* Optional: Add styling for child elements if required */
         .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary:hover .relative.grow.overflow-hidden.whitespace-nowrap {
             white-space: normal;
-            padding: 5px;
-            padding-left: 2px; /* Reduce left-side padding */
-            border-radius: 4px;
+        
+        }
+
+        /* Matching hover effect for button */
+        .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary:hover .flex.items-center.justify-center.text-token-text-secondary.transition.hover\\:text-token-text-primary.radix-state-open\\:text-token-text-secondary{
+            background-color: inherit;
+            color: black;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+
+        /* Increase Text Size in the Target Div */
+        .px-2.text-xs.font-semibold.text-ellipsis.overflow-hidden.break-all.pt-3.pb-2.text-token-text-primary {
+            font-size: 1.5em;
+        }
+
+        .sticky.bg-token-sidebar-surface-primary.top-0.z-20{
+            background-color: inherit
+            position: absolute
+        }
+
+        /* Dropdown Button Styling */
+        #customDropdownButton {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px; /* Increased size */
+            font-weight: bold;
+            transition: transform 0.3s ease, color 0.3s ease; /* Smooth transitions */
+            padding: 4px 8px;
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #customDropdownButton:hover {
+            color: #555;
+        }
+
+        /* Rotated state for the button when toggled */
+        #customDropdownButton.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Transition for ol elements */
+        ol > * {
+            opacity: 1;
+            max-height: 1000px;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+            overflow: hidden;
+        }
+
+        ol > *.hidden-ol-element {
+            opacity: 0;
+            max-height: 0;
         }
     `;
     document.head.appendChild(style);
-    console.log("Updated hover styles injected for the correct div.");
+    console.log("Updated hover styles and dropdown button styles injected.");
 }
 
-
-
-// Function to change the background color of the body and the target div
+// Function to change the background color of the body and the target divs
 function applyBackgroundColor(color) {
     // Change the body's background color
     document.body.style.backgroundColor = color;
 
-    // Change the background color of the target div
-    const targetDiv = document.querySelector(
-        ".draggable.no-draggable-children.sticky.top-0.p-3.mb-1\\.5.flex.items-center.justify-between.z-10.h-header-height.font-semibold.bg-token-main-surface-primary.max-md\\:hidden"
-    );
+    // Object mapping selectors to their respective colors
+    const targets = [
+        {
+            selector: ".draggable.no-draggable-children.sticky.top-0.p-3.mb-1\\.5.flex.items-center.justify-between.z-10.h-header-height.font-semibold.bg-token-main-surface-primary.max-md\\:hidden",
+            color: color
+        },
+        {
+            selector: ".draggable.relative.h-full.w-full.flex-1.items-start.border-white\\/20",
+            color: "#101820FF" // Navy Blue
+        },
+        {
+            selector: ".absolute.bottom-0.top-0",
+            color: "#101820FF" // Navy Blue
+        },
+    ];
 
-    if (targetDiv) {
-        targetDiv.style.backgroundColor = color;
-        targetDiv.style.transition = "background-color 0.5s ease"; // Smooth transition for the div
-        console.log("Background color applied to target div:", color);
-    } else {
-        console.error("Target div for background color not found.");
-    }
+    // Loop through each target and apply styles
+    targets.forEach((target) => {
+        const targetDiv = document.querySelector(target.selector);
+        if (targetDiv) {
+            targetDiv.style.backgroundColor = target.color;
+            targetDiv.style.transition = "background-color 0.5s ease"; // Smooth transition for the div
+            console.log(`Background color applied to div with selector: ${target.selector}`);
+        } else {
+            console.error(`Target div not found for selector: ${target.selector}`);
+        }
+    });
 }
+
 
 // Function to apply a font style
 function applyFontStyle(font) {
@@ -109,15 +181,15 @@ function hideElementsFromDiv() {
     }
 }
 
-// Function to hide <ol> elements
+// Function to hide <ol> elements gracefully
 function hideOlElements() {
     const targetDiv = document.querySelector(".relative.mt-5.first\\:mt-0.last\\:mb-5");
     if (targetDiv) {
         const olElements = targetDiv.querySelectorAll("ol > *");
         if (olElements.length > 0) {
             olElements.forEach((element) => {
-                element.style.display = "none"; // Hide the element
-                console.log("Element under <ol> hidden:", element);
+                element.classList.add("hidden-ol-element"); 
+                console.log("Element under <ol> hidden with transition:", element);
             });
         } else {
             console.log("No elements found under <ol> in the target div.");
@@ -127,15 +199,15 @@ function hideOlElements() {
     }
 }
 
-// Function to show <ol> elements
+// Function to show <ol> elements gracefully
 function showOlElements() {
     const targetDiv = document.querySelector(".relative.mt-5.first\\:mt-0.last\\:mb-5");
     if (targetDiv) {
         const olElements = targetDiv.querySelectorAll("ol > *");
         if (olElements.length > 0) {
             olElements.forEach((element) => {
-                element.style.display = ""; // Revert to default display
-                console.log("Element under <ol> shown:", element);
+                element.classList.remove("hidden-ol-element");
+                console.log("Element under <ol> shown with transition:", element);
             });
         } else {
             console.log("No elements found under <ol> in the target div to show.");
@@ -145,52 +217,37 @@ function showOlElements() {
     }
 }
 
-// Function to add a dropdown button to the target div
+// Function to add a dropdown button to all target divs
 function addDropdownButton() {
-    console.log("addDropdownButton called"); // Debugging statement
+    console.log("addDropdownButton called");
 
-    // Select the target div using the provided selector
-    const targetDiv = document.querySelector(".sticky.bg-token-sidebar-surface-primary.top-0.z-20");
+    // Select all target divs
+    const targetDivs = document.querySelectorAll(".sticky.bg-token-sidebar-surface-primary.top-0.z-20");
+    
+    // If no target divs found, log an error and return
+    if (targetDivs.length === 0) {
+        console.error("No target divs found for dropdown button.");
+        return;
+    }
 
-    console.log("Target Div for Dropdown Button:", targetDiv); // Debugging statement
-
-    if (targetDiv) {
-        // Ensure the target div is a flex container for proper alignment
+    targetDivs.forEach((targetDiv, divIndex) => {
         targetDiv.style.display = "flex";
-        targetDiv.style.alignItems = "center"; // Vertically align items in the center
+        targetDiv.style.alignItems = "center";
 
-        // Check if the dropdown button already exists to prevent duplicates
-        if (!document.getElementById("customDropdownButton")) {
-            // Create the button element
-            const dropdownButton = document.createElement("button");
-            dropdownButton.id = "customDropdownButton"; // Assign an ID for future reference
-            dropdownButton.innerHTML = "&#9662;"; // Button label with a down arrow
+        // Check if a dropdown button already exists in this targetDiv
+        let dropdownButton = targetDiv.querySelector(".customDropdownButton");
+        if (!dropdownButton) {
+            dropdownButton = document.createElement("button");
+            dropdownButton.classList.add("customDropdownButton");
+            dropdownButton.innerHTML = "&#9662;"; // Down arrow initially
 
-            // Style the button for inline alignment
-            dropdownButton.style.marginLeft = "auto"; // Pushes the button to the right in a flex container
-            dropdownButton.style.padding = "4px 8px"; // Reduced padding
-            dropdownButton.style.backgroundColor = "transparent"; // Match the background (transparent)
-            dropdownButton.style.border = "none"; // Remove border to match the background
-            dropdownButton.style.cursor = "pointer"; // Pointer cursor on hover
-            dropdownButton.style.fontSize = "14px";
-            dropdownButton.style.fontWeight = "bold";
-            dropdownButton.style.transition = "color 0.3s ease, transform 0.3s ease"; // Smooth color and transform transition for hover
-
-            // Optional: Add hover effect (change text color instead of background)
-            dropdownButton.style.color = "#000"; // Default text color
-            dropdownButton.addEventListener("mouseover", () => {
-                dropdownButton.style.color = "#555"; // Lighter text color on hover
-            });
-            dropdownButton.addEventListener("mouseout", () => {
-                dropdownButton.style.color = "#000"; // Restore default text color
-            });
-
-            // Append the dropdown button to the target div
             targetDiv.appendChild(dropdownButton);
-            console.log("Dropdown button added to target div.");
+            console.log(`Dropdown button added to target div #${divIndex + 1}.`);
 
-            // **Add the click event to toggle hiding/showing <ol> elements**
             dropdownButton.addEventListener("click", () => {
+                // Toggle rotation class for nice transition
+                dropdownButton.classList.toggle("rotated");
+
                 if (!olHidden) {
                     hideOlElements();
                     olHidden = true;
@@ -202,12 +259,11 @@ function addDropdownButton() {
                 }
             });
         } else {
-            console.log("Dropdown button already exists.");
+            console.log(`Dropdown button already exists in target div #${divIndex + 1}.`);
         }
-    } else {
-        console.error("Target div for dropdown button not found.");
-    }
+    });
 }
+
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -250,12 +306,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         hideElementsFromDiv();
         sendResponse({ status: "success", message: "Elements hidden from target div" });
     }
-    // **Handle Add Dropdown Button Action**
     else if (request.action === "addDropdownButton") {
         addDropdownButton();
         sendResponse({ status: "success", message: "Dropdown button added to target div" });
     }
-    // **Handle Hide Elements Under <ol> Action**
     else if (request.action === "hideOlElements") {
         if (!olHidden) {
             hideOlElements();
@@ -288,7 +342,7 @@ const observer = new MutationObserver(() => {
         if (data.backgroundColor) {
             applyBackgroundColor(data.backgroundColor);
         }
-        hideElementsFromDiv(); // Ensure elements are hidden
+        hideElementsFromDiv(); // Ensure elements are hidden if needed
         addDropdownButton();  // Ensure the dropdown button is present after DOM changes
     });
 });
@@ -317,3 +371,72 @@ chrome.storage.sync.get(["gradientEnabled", "fontStyle", "backgroundColor"], (da
 
 // Initialize the content script
 initializeContentScript();
+
+
+/* -------------------------------------------
+   ARROW KEY NAVIGATION BETWEEN CHAT MESSAGES
+   ------------------------------------------- */
+
+// Variables to track the current selected message
+let currentMessageIndex = -1;
+let messageElements = [];
+
+function updateMessageElements() {
+    // Collect all chatboxes from multiple containers
+    const containers = document.querySelectorAll(".flex.w-full.flex-col.gap-1.empty\\:hidden.items-end.rtl\\:items-start");
+    if (containers.length > 0) {
+        messageElements = [];
+        containers.forEach(container => {
+            // Append all child divs of each container to the messageElements array
+            messageElements.push(...Array.from(container.children));
+        });
+        console.log("Message elements updated. Total Count:", messageElements.length, messageElements);
+    } else {
+        messageElements = [];
+        console.log("No chatbox containers found.");
+    }
+}
+
+function highlightMessage(index) {
+    if (!messageElements.length || index < 0 || index >= messageElements.length) return;
+    messageElements.forEach((el, i) => {
+        el.style.outline = i === index ? "2px solid blue" : "none";
+    });
+    console.log("Highlighted message index:", index, messageElements[index]);
+}
+
+document.addEventListener('keydown', (e) => {
+    // Check if Ctrl key is pressed along with ArrowDown or ArrowUp
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && e.ctrlKey) {
+        updateMessageElements();
+        if (!messageElements.length) {
+            console.log("No messages to navigate.");
+            return;
+        }
+
+        console.log("Current Index before key press:", currentMessageIndex, "Total messages:", messageElements.length);
+
+        if (e.key === 'ArrowDown') {
+            // If no selection yet, go to the first message
+            if (currentMessageIndex === -1) {
+                currentMessageIndex = 0;
+            } else if (currentMessageIndex < messageElements.length - 1) {
+                currentMessageIndex++;
+            }
+        } else if (e.key === 'ArrowUp') {
+            // If no selection yet, go to the last message
+            if (currentMessageIndex === -1) {
+                currentMessageIndex = messageElements.length - 1;
+            } else if (currentMessageIndex > 0) {
+                currentMessageIndex--;
+            }
+        }
+
+        console.log("Current Index after key press:", currentMessageIndex);
+
+        if (currentMessageIndex >= 0 && currentMessageIndex < messageElements.length) {
+            highlightMessage(currentMessageIndex);
+            messageElements[currentMessageIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+});
