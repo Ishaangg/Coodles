@@ -9,16 +9,66 @@ let olHidden = false; // Track whether ol elements are hidden or not
 function injectHoverStyles() {
     const style = document.createElement('style');
     style.textContent = `
-        /* Hover animation for divs with the correct class */
+        /* Existing hover animation for other divs */
         .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary {
             transition: transform 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease, margin-left 0.3s ease;
             transform-origin: center center;
         }
-        
+
+        /* New Hover Effect for the Specific Div */
+        .no-draggable.group.rounded-lg.active\\:opacity-90.bg-\\[var\\(--item-background-color\\)\\].h-9.text-sm.relative.screen-arch\\:bg-transparent:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            color: #000;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease, color 0.3s ease;
+        }
+
+        /* Optional: Add styling for child elements if required */
+        .no-draggable.group.rounded-lg.active\\:opacity-90.bg-\\[var\\(--item-background-color\\)\\].h-9.text-sm.relative.screen-arch\\:bg-transparent:hover .relative.grow.overflow-hidden.whitespace-nowrap {
+            white-space: normal;
+        }
+
+         /* Input message div */
+#composer-background {
+    border: 2px solid transparent;
+    border-radius: 8px; /* Optional for rounded corners */
+    animation: glow-border 5s infinite; /* Slower animation */
+    box-shadow: 0 0 10px rgba(173, 216, 230, 0.75); /* Light blue glow */
+}
+
+@keyframes glow-border {
+    0% {
+        border-color: lightblue;
+        box-shadow: 0 0 10px rgba(173, 216, 230, 0.75);
+    }
+    25% {
+        border-color: lightgreen;
+        box-shadow: 0 0 10px rgba(144, 238, 144, 0.75);
+    }
+    50% {
+        border-color: lightcoral;
+        box-shadow: 0 0 10px rgba(240, 128, 128, 0.75);
+    }
+    75% {
+        border-color: lightsalmon;
+        box-shadow: 0 0 10px rgba(255, 160, 122, 0.75);
+    }
+    100% {
+        border-color: lightblue;
+        box-shadow: 0 0 10px rgba(173, 216, 230, 0.75);
+    }
+}
+
+
+
+
+        /*
         .absolute.bottom-0.top-0 {
             background: linear-gradient(to left, var(--token-sidebar-surface-primary), var(--token-sidebar-surface-secondary));
             overflow: hidden;
-        }
+        } */
 
         /* Hover effect for parent div */
         .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary:hover {
@@ -31,6 +81,8 @@ function injectHoverStyles() {
             border-radius: 10px;
             margin-left: 8px;
         }
+
+
 
         /* Optional: Add styling for child elements if required */
         .no-draggable.group.relative.rounded-lg.active\\:opacity-90.hover\\:bg-token-sidebar-surface-secondary:hover .relative.grow.overflow-hidden.whitespace-nowrap {
@@ -92,10 +144,20 @@ function injectHoverStyles() {
             opacity: 0;
             max-height: 0;
         }
+
+        .icon-md {
+    /* Add your styles here */
+    fill: red; /* Example: Change the fill color */
+    width: 30px; /* Example: Change the width */
+    height: 30px; /* Example: Change the height */
+    transition: transform 0.3s ease; /* Example: Add a hover effect */
+}
+
     `;
     document.head.appendChild(style);
     console.log("Updated hover styles and dropdown button styles injected.");
 }
+
 
 // Function to change the background color of the body and the target divs
 function applyBackgroundColor(color) {
@@ -109,13 +171,13 @@ function applyBackgroundColor(color) {
             color: color
         },
         {
-            selector: ".draggable.relative.h-full.w-full.flex-1.items-start.border-white\\/20",
+            selector: ".flex.h-full.w-full.flex-col.px-3",
             color: "#101820FF" // Navy Blue
         },
         {
             selector: ".absolute.bottom-0.top-0",
             color: "#101820FF" // Navy Blue
-        },
+        }
     ];
 
     // Loop through each target and apply styles
