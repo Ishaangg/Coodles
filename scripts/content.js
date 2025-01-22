@@ -145,6 +145,12 @@ function injectHoverStyles() {
             max-height: 0;
         }
 
+        .sticky.bg-token-sidebar-surface-primary {
+    background-color: #101820FF !important;
+    transition: background-color 0.5s ease;
+}
+
+
         .icon-md {
     /* Add your styles here */
     fill: red; /* Example: Change the fill color */
